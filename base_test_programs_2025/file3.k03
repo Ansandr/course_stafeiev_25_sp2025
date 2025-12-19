@@ -1,15 +1,24 @@
-NAME _PROGRAM ; 
-BODY DATA INTEGER16 _AAAAAAA , _BBBBBBB , _CYCLEAA , _CYCLEBB , _XVALUEE;
-  GET ( _AAAAAAA )
-  GET ( _BBBBBBB )
+program AF5;
+start var int32 AG6, AH7, AI8, AJ9, AK0;
+  read AG6;
+  read AH7;
 
-  FOR _AAAAAAA =: _CYCLEAA TO _BBBBBBB DO
-    PUT ( _CYCLEAA * _CYCLEAA )
+  AG6 :> AI8;
+  while AI8 lt (AH7 add 1) {
+    write (AI8 mul AI8);
+    AI8 add 1 :> AI8;
+  }
 
-  0 =: _XVALUEE
-  FOR 1 =: _CYCLEAA TO _AAAAAAA DO
-    FOR 1 =: _CYCLEBB TO _BBBBBBB DO
-       _XVALUEE + 1 =: _XVALUEE
-  PUT ( _XVALUEE )
+  0 :> AK0;
+  1 :> AI8;
+  while AI8 lt (AG6 add 1) {
+    1 :> AJ9;
+    while AJ9 lt (AH7 add 1) {
+      AK0 add 1 :> AK0;
+      AJ9 add 1 :> AJ9;
+    }
+    AI8 add 1 :> AI8;
+  }
+  write AK0;
 
-END
+end
