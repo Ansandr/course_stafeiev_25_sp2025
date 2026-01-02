@@ -129,6 +129,9 @@ $RECYCLE.BIN/
 # Graphviz
 dfa_generator__2025/Graphviz-14.0.5-win32/
 
+# Boost
+boost/
+
 # CMake
 build/
 build-test/
@@ -141,6 +144,18 @@ CTestTestfile.cmake
 !CMakeLists.txt
 !CMakePresets.json
 
-# Build products
-built_src/
-built_doc/
+# Generated build products
+built_src/*.hpp
+built_src/*.txt
+built_src/full_dfa/
+built_doc/*.dot
+built_doc/*.svg
+built_doc/*.pdf
+built_doc/*.txt
+built_doc/full_dfa/
+
+addonOfTasks.pdf
+TODOlist.txt
+*.pdf
+~$*.doc
+~$*.docx

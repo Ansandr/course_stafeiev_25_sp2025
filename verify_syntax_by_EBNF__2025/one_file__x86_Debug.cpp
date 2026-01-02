@@ -9,9 +9,8 @@
 //#include "stdafx.h"
 #if !defined(_DEBUG) || !defined(_WIN32) || !defined(_M_IX86)
 #include "stdio.h"
-#include <iostream>
-int main_spirit(int argc, char* argv[]) {
-    printf("Please, switch to mode VS + x86 + Debug and recompile the project.\r\n");
+int main() {
+    printf("Please, switch to mode VS + x86 + Debug.\r\n");
     (void)getchar();
 
     return 0;
@@ -26,7 +25,9 @@ int main_spirit(int argc, char* argv[]) {
 
 #define RERUN_MODE
 
-#define DEFAULT_INPUT_FILE "../base_test_programs_2025/file1.k03"
+//#define DEFAULT_INPUT_FILE "../base_test_programs_2025/file1.k03"
+//#define DEFAULT_INPUT_FILE "../other_test_programs_2025/file4.k03"
+#define DEFAULT_INPUT_FILE "file1.k03"
 
 #define MAX_TEXT_SIZE 8192
 
@@ -431965,7 +431966,7 @@ namespace boost {
 #line 13 "C:\\Users\\Nazar\\source\\repos\\cw_spirit\\cw_spirit\\cwgrammar.cpp"
 
 
-static size_t loadSource(char** text, char* fileName) {
+size_t loadSource(char** text, char* fileName) {
     if (!fileName) {
         printf("No input file name\r\n");
         return 0;
@@ -432016,7 +432017,7 @@ static size_t loadSource(char** text, char* fileName) {
 }
 
 #define MAX_LEXEM_SIZE 1024
-static int commentRemover(char* text, const char* openStrSpc, const char* closeStrSpc) {
+int commentRemover(char* text, const char* openStrSpc, const char* closeStrSpc) {
     bool eofAlternativeCloseStrSpcType = false;
     bool explicitCloseStrSpc = true;
     if (!strcmp(closeStrSpc, "\n")) {

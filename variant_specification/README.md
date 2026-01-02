@@ -26,19 +26,4 @@
 2. **verify_syntax_by_EBNF__2025** — верифікатор синтаксису (включає всі три файли)
 3. **verify_syntax_by_EBNF_nonpacked__2025** — альтернативна версія верифікатора
 
-**Чому це окрема папка:**
-
-- Спільні дані для всіх компонентів компілятора
-- Зміна варіанту мови потребує редагування тільки цих файлів
-
-## logs
-
-```text
-Searched for text `variant_specification`, 7 results
-
-Read [](/variant_specification)
-
-Read [](/variant_specification/LexicaByRegExAndSyntaxByLL2protototype.h#1-1), lines 1 to 50
-
-Read [](/variant_specification/EBNF_N1.h#1-1), lines 1 to 50
-```
+Зміна варіанту мови потребує редагування тільки цих файлів
