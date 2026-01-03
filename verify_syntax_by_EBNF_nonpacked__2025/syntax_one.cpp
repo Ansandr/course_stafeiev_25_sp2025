@@ -337,7 +337,7 @@ unsigned int tryToGetUnsignedValue(struct LexemInfo* lexemInfoInTable) {
 	return ~SUCCESS_STATE;
 }
 
-int commentRemover(char* text, const char* openStrSpc, const char* closeStrSpc) {
+extern int commentRemover(char* text, const char* openStrSpc, const char* closeStrSpc) {
 	bool eofAlternativeCloseStrSpcType = false;
 	bool explicitCloseStrSpc = true;
 	if (!strcmp(closeStrSpc, "\n")) {
@@ -494,7 +494,7 @@ struct LexemInfo tokenize(char* text, struct LexemInfo** lastLexemInfoInTable, c
 }
 
 // after using this function use free(void *) function to release text buffer
-size_t loadSource(char** text, char* fileName) {
+extern size_t loadSource(char** text, char* fileName) {
 	if (!fileName) {
 		printf("No input file name\r\n");
 		return 0;

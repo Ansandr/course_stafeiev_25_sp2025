@@ -7,11 +7,11 @@
 
 
 
-#define COMMENT_BEGIN_STR "#*"
-#define COMMENT_END_STR   "*#"
-#define TOKENS_RE         ";|:=|=:|\\+|-|\\*|,|==|!=|:|\\[|\\]|\\(|\\)|\\{|\\}|<=|>=|[_0-9A-Za-z]+|[^ \t\r\f\v\n]"
-#define KEYWORDS_RE       ";|:=|=:|\\+|-|\\*|,|==|!=|:|\\[|\\]|\\(|\\)|\\{|\\}|NAME|DATA|BODY|END|BREAK|CONTINUE|GET|PUT|IF|ELSE|FOR|TO|DOWNTO|DO|WHILE|REPEAT|UNTIL|GOTO|DIV|MOD|<=|>=|NOT|AND|OR|INTEGER16"
-#define IDENTIFIERS_RE    "_[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][A-Z]"
+#define COMMENT_BEGIN_STR "/*"
+#define COMMENT_END_STR   "*/"
+#define TOKENS_RE         ";|:>|add|-|mul|/|%|==|!=|lt|gt|not|and|or|\\[|\\]|\\(|\\)|\\{|\\}|,|program|start|end|var|read|write|if|else|while|break|continue|int32|[A-Z][A-Z][0-9]|[0-9]+"
+#define KEYWORDS_RE       ";|:>|add|-|mul|/|%|==|!=|lt|gt|not|and|or|\\[|\\]|\\(|\\)|\\{|\\}|,|program|start|end|var|read|write|if|else|while|break|continue|int32"
+#define IDENTIFIERS_RE    "[A-Z][A-Z][0-9]"
 #define UNSIGNEDVALUES_RE "0|[1-9][0-9]*"
 #define T_BEGIN_GROUPEXPRESSION_0 "("
 #define T_BEGIN_GROUPEXPRESSION_1 ""
@@ -41,15 +41,7 @@
 #define T_SEMICOLON_1 ""
 #define T_SEMICOLON_2 ""
 #define T_SEMICOLON_3 ""
-#define T_COLON_0 ":"
-#define T_COLON_1 ""
-#define T_COLON_2 ""
-#define T_COLON_3 ""
-#define T_GOTO_0 "GOTO"
-#define T_GOTO_1 ""
-#define T_GOTO_2 ""
-#define T_GOTO_3 ""
-#define T_DATA_TYPE_0 "INTEGER16"
+#define T_DATA_TYPE_0 "int32"
 #define T_DATA_TYPE_1 ""
 #define T_DATA_TYPE_2 ""
 #define T_DATA_TYPE_3 ""
@@ -61,7 +53,7 @@
 #define T_BITWISE_NOT_1 ""
 #define T_BITWISE_NOT_2 ""
 #define T_BITWISE_NOT_3 ""
-#define T_NOT_0 "NOT"
+#define T_NOT_0 "not"
 #define T_NOT_1 ""
 #define T_NOT_2 ""
 #define T_NOT_3 ""
@@ -69,7 +61,7 @@
 #define T_BITWISE_AND_1 ""
 #define T_BITWISE_AND_2 ""
 #define T_BITWISE_AND_3 ""
-#define T_AND_0 "AND"
+#define T_AND_0 "and"
 #define T_AND_1 ""
 #define T_AND_2 ""
 #define T_AND_3 ""
@@ -77,7 +69,7 @@
 #define T_BITWISE_OR_1 ""
 #define T_BITWISE_OR_2 ""
 #define T_BITWISE_OR_3 ""
-#define T_OR_0 "OR"
+#define T_OR_0 "or"
 #define T_OR_1 ""
 #define T_OR_2 ""
 #define T_OR_3 ""
@@ -89,15 +81,15 @@
 #define T_NOT_EQUAL_1 ""
 #define T_NOT_EQUAL_2 ""
 #define T_NOT_EQUAL_3 ""
-#define T_LESS_OR_EQUAL_0 "<="
-#define T_LESS_OR_EQUAL_1 ""
-#define T_LESS_OR_EQUAL_2 ""
-#define T_LESS_OR_EQUAL_3 ""
-#define T_GREATER_OR_EQUAL_0 ">="
-#define T_GREATER_OR_EQUAL_1 ""
-#define T_GREATER_OR_EQUAL_2 ""
-#define T_GREATER_OR_EQUAL_3 ""
-#define T_ADD_0 "+"
+#define T_LESS_0 "lt"
+#define T_LESS_1 ""
+#define T_LESS_2 ""
+#define T_LESS_3 ""
+#define T_GREATER_0 "gt"
+#define T_GREATER_1 ""
+#define T_GREATER_2 ""
+#define T_GREATER_3 ""
+#define T_ADD_0 "add"
 #define T_ADD_1 ""
 #define T_ADD_2 ""
 #define T_ADD_3 ""
@@ -105,19 +97,19 @@
 #define T_SUB_1 ""
 #define T_SUB_2 ""
 #define T_SUB_3 ""
-#define T_MUL_0 "*"
+#define T_MUL_0 "mul"
 #define T_MUL_1 ""
 #define T_MUL_2 ""
 #define T_MUL_3 ""
-#define T_DIV_0 "DIV"
+#define T_DIV_0 "/"
 #define T_DIV_1 ""
 #define T_DIV_2 ""
 #define T_DIV_3 ""
-#define T_MOD_0 "MOD"
+#define T_MOD_0 "%"
 #define T_MOD_1 ""
 #define T_MOD_2 ""
 #define T_MOD_3 ""
-#define T_LRASSIGN_0 "=:"
+#define T_LRASSIGN_0 ":>"
 #define T_LRASSIGN_1 ""
 #define T_LRASSIGN_2 ""
 #define T_LRASSIGN_3 ""
@@ -125,97 +117,67 @@
 #define T_THEN_BLOCK_1 ""
 #define T_THEN_BLOCK_2 ""
 #define T_THEN_BLOCK_3 ""
-#define T_ELSE_BLOCK_0 "ELSE"
+#define T_ELSE_BLOCK_0 "else"
 #define T_ELSE_BLOCK_1 T_BEGIN_BLOCK_0
 #define T_ELSE_BLOCK_2 ""
 #define T_ELSE_BLOCK_3 ""
-#define T_IF_0 "IF"
+#define T_IF_0 "if"
 #define T_IF_1 ""
 #define T_IF_2 ""
 #define T_IF_3 ""
-#define T_ELSE_IF_0 "ELSE"
+#define T_ELSE_IF_0 "else"
 #define T_ELSE_IF_1 T_IF_0
 #define T_ELSE_IF_2 ""
 #define T_ELSE_IF_3 ""
-#define T_DO_0 "DO"
-#define T_DO_1 ""
-#define T_DO_2 ""
-#define T_DO_3 ""
-#define T_FOR_0 "FOR"
-#define T_FOR_1 ""
-#define T_FOR_2 ""
-#define T_FOR_3 ""
-#define T_TO_0 "TO"
-#define T_TO_1 ""
-#define T_TO_2 ""
-#define T_TO_3 ""
-#define T_DOWNTO_0 "DOWNTO"
-#define T_DOWNTO_1 ""
-#define T_DOWNTO_2 ""
-#define T_DOWNTO_3 ""
-#define T_WHILE_0 "WHILE"
+#define T_WHILE_0 "while"
 #define T_WHILE_1 ""
 #define T_WHILE_2 ""
 #define T_WHILE_3 ""
-#define T_CONTINUE_WHILE_0 "CONTINUE"
+#define T_CONTINUE_WHILE_0 "continue"
 #define T_CONTINUE_WHILE_1 ""
 #define T_CONTINUE_WHILE_2 ""
 #define T_CONTINUE_WHILE_3 ""
-#define T_EXIT_WHILE_0 "BREAK"
+#define T_EXIT_WHILE_0 "break"
 #define T_EXIT_WHILE_1 "" 
 #define T_EXIT_WHILE_2 "" 
 #define T_EXIT_WHILE_3 ""
-#define T_EXIT_0 "EXIT"
+#define T_EXIT_0 "exit"
 #define T_EXIT_1 "" 
 #define T_EXIT_2 "" 
 #define T_EXIT_3 ""
-#define T_REPEAT_0 "REPEAT"
-#define T_REPEAT_1 ""
-#define T_REPEAT_2 ""
-#define T_REPEAT_3 ""
-#define T_UNTIL_0 "UNTIL"
-#define T_UNTIL_1 ""
-#define T_UNTIL_2 ""
-#define T_UNTIL_3 ""
-#define T_INPUT_0 "GET"
+#define T_INPUT_0 "read"
 #define T_INPUT_1 ""
 #define T_INPUT_2 ""
 #define T_INPUT_3 ""
-#define T_OUTPUT_0 "PUT"
+#define T_OUTPUT_0 "write"
 #define T_OUTPUT_1 ""
 #define T_OUTPUT_2 ""
 #define T_OUTPUT_3 ""
-#define T_NAME_0 "NAME"
+#define T_NAME_0 "program"
 #define T_NAME_1 ""
 #define T_NAME_2 ""
 #define T_NAME_3 ""
-#define T_BODY_0 "BODY"
+#define T_BODY_0 "start"
 #define T_BODY_1 ""
 #define T_BODY_2 ""
 #define T_BODY_3 ""
-#define T_DATA_0 "DATA"
+#define T_DATA_0 "var"
 #define T_DATA_1 ""
 #define T_DATA_2 ""
 #define T_DATA_3 ""
-#define T_BEGIN_0 "BEGIN"
+#define T_BEGIN_0 "begin"
 #define T_BEGIN_1 ""
 #define T_BEGIN_2 ""
 #define T_BEGIN_3 ""
-#define T_END_0 "END"
+#define T_END_0 "end"
 #define T_END_1 ""
 #define T_END_2 ""
 #define T_END_3 ""
-#define T_NULL_STATEMENT_0 "NULL"
-#define T_NULL_STATEMENT_1 "STATEMENT"
+#define T_NULL_STATEMENT_0 "null"
+#define T_NULL_STATEMENT_1 "statement"
 #define T_NULL_STATEMENT_2 ""
 #define T_NULL_STATEMENT_3 ""
 #define GRAMMAR_LL2__2025 {\
-{ LA_IS, {"ident_terminal"}, { "labeled_point",{\
-    { LA_IS, {""}, 2, {"ident", T_COLON_0}}\
-}}},\
-{ LA_IS, {T_GOTO_0}, { "goto_label",{\
-    { LA_IS, {""}, 2, {T_GOTO_0, "ident"}}\
-}}},\
 { LA_IS, {"ident_terminal"}, { "program_name",{\
     { LA_IS, {""}, 1, {"ident"}}\
 }}},\
@@ -267,11 +229,11 @@
 { LA_IS, { T_NOT_EQUAL_0 }, { "binary_operator",{\
     { LA_IS, {""}, 1, { T_NOT_EQUAL_0 }}\
 }}},\
-{ LA_IS, { T_LESS_OR_EQUAL_0 }, { "binary_operator",{\
-    { LA_IS, {""}, 1, { T_LESS_OR_EQUAL_0 }}\
+{ LA_IS, { T_LESS_0 }, { "binary_operator",{\
+    { LA_IS, {""}, 1, { T_LESS_0 }}\
 }}},\
-{ LA_IS, { T_GREATER_OR_EQUAL_0 }, { "binary_operator",{\
-    { LA_IS, {""}, 1, { T_GREATER_OR_EQUAL_0 }}\
+{ LA_IS, { T_GREATER_0 }, { "binary_operator",{\
+    { LA_IS, {""}, 1, { T_GREATER_0 }}\
 }}},\
 { LA_IS, { T_ADD_0 }, { "binary_operator",{\
     { LA_IS, {""}, 1, { T_ADD_0 }}\
@@ -288,7 +250,7 @@
 { LA_IS, { T_MOD_0 }, { "binary_operator",{\
     { LA_IS, {""}, 1, { T_MOD_0 }}\
 }}},\
-{ LA_IS, { T_AND_0, T_OR_0, T_EQUAL_0, T_NOT_EQUAL_0, T_LESS_OR_EQUAL_0, T_GREATER_OR_EQUAL_0, T_ADD_0, T_SUB_0, T_MUL_0, T_DIV_0, T_MOD_0 }, { "binary_action",{\
+{ LA_IS, { T_AND_0, T_OR_0, T_EQUAL_0, T_NOT_EQUAL_0, T_LESS_0, T_GREATER_0, T_ADD_0, T_SUB_0, T_MUL_0, T_DIV_0, T_MOD_0 }, { "binary_action",{\
     { LA_IS, {""}, 2, { "binary_operator", "expression" }}\
 }}},\
 {LA_IS, { "(" }, { "left_expression",{\
@@ -319,10 +281,10 @@
 {LA_IS, { "(", T_NOT_0, T_ADD_0, T_SUB_0, "ident_terminal", "unsigned_value_terminal", T_IF_0 }, { "expression",{\
     {LA_IS, {""}, 2, { "left_expression", "binary_action__iteration" }}\
 }}},\
-{LA_IS, { T_AND_0, T_OR_0, T_EQUAL_0, T_NOT_EQUAL_0, T_LESS_OR_EQUAL_0, T_GREATER_OR_EQUAL_0, T_ADD_0, T_SUB_0, T_MUL_0, T_DIV_0, T_MOD_0 }, { "binary_action__iteration",{\
+{LA_IS, { T_AND_0, T_OR_0, T_EQUAL_0, T_NOT_EQUAL_0, T_LESS_0, T_GREATER_0, T_ADD_0, T_SUB_0, T_MUL_0, T_DIV_0, T_MOD_0 }, { "binary_action__iteration",{\
     {LA_IS, {""}, 2, { "binary_action", "binary_action__iteration" }}\
 }}},\
-{LA_NOT, { T_AND_0, T_OR_0, T_EQUAL_0, T_NOT_EQUAL_0, T_LESS_OR_EQUAL_0, T_GREATER_OR_EQUAL_0, T_ADD_0, T_SUB_0, T_MUL_0, T_DIV_0, T_MOD_0 }, { "binary_action__iteration",{\
+{LA_NOT, { T_AND_0, T_OR_0, T_EQUAL_0, T_NOT_EQUAL_0, T_LESS_0, T_GREATER_0, T_ADD_0, T_SUB_0, T_MUL_0, T_DIV_0, T_MOD_0 }, { "binary_action__iteration",{\
     {LA_IS, {""}, 0, { "" }}\
 }}},\
 {LA_IS, { "(" }, { "group_expression",{\
@@ -368,43 +330,13 @@
 {LA_NOT, { T_ELSE_BLOCK_0 }, { "body_for_false__optional",{\
     {LA_IS, {""}, 0, { "" }}\
 }}},\
-{LA_IS, { "(", T_NOT_0, T_ADD_0, T_SUB_0, "ident_terminal", "unsigned_value_terminal", T_IF_0 }, { "cycle_begin_expression",{\
-    {LA_IS, {""}, 1, { "expression" }}\
-}}},\
-{LA_IS, { "(", T_NOT_0, T_ADD_0, T_SUB_0, "ident_terminal", "unsigned_value_terminal", T_IF_0 }, { "cycle_end_expression",{\
-    {LA_IS, {""}, 1, { "expression" }}\
-}}},\
-{LA_IS, { "ident_terminal" }, { "cycle_counter",{\
-    {LA_IS, {""}, 1, { "ident" }}\
-}}},\
-{LA_IS, { "(", T_NOT_0, T_ADD_0, T_SUB_0, "ident_terminal", "unsigned_value_terminal", T_IF_0 }, { "cycle_counter_lr_init",{\
-    {LA_IS, {""}, 3, { "cycle_begin_expression", T_LRASSIGN_0, "cycle_counter" }}\
-}}},\
-{LA_IS, { "(", T_NOT_0, T_ADD_0, T_SUB_0, "ident_terminal", "unsigned_value_terminal", T_IF_0 }, { "cycle_counter_init",{\
-    {LA_IS, { "" }, 1, { "cycle_counter_lr_init" }}\
-}}},\
-{LA_IS, { "(", T_NOT_0, T_ADD_0, T_SUB_0, "ident_terminal", "unsigned_value_terminal", T_IF_0 }, { "cycle_counter_last_value",{\
-    {LA_IS, {""}, 1, { "cycle_end_expression" }}\
-}}},\
-{LA_IS, { T_DO_0 }, { "cycle_body",{\
-    {LA_IS, {""}, 2, { T_DO_0, "statements__or__block_statements" }}\
-}}},\
-{LA_IS, { T_TO_0 }, { "forto_direction",{\
-    {LA_IS, {""}, 1, { T_TO_0 }}\
-}}},\
-{LA_IS, { T_DOWNTO_0 }, { "forto_direction",{\
-    {LA_IS, {""}, 1, { T_DOWNTO_0 }}\
-}}},\
-{LA_IS, { T_FOR_0 }, { "forto_cycle",{\
-    {LA_IS, {""}, 5, { T_FOR_0, "cycle_counter_init", "forto_direction", "cycle_counter_last_value", "cycle_body" }}\
-}}},\
 {LA_IS, { T_CONTINUE_WHILE_0 }, { "continue_while",{\
     {LA_IS, {""}, 1, { T_CONTINUE_WHILE_0 }}\
 }}},\
 {LA_IS, { T_EXIT_WHILE_0 }, { "break_while",{\
     {LA_IS, {""}, 1, { T_EXIT_WHILE_0 }}\
 }}},\
-{LA_IS, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_FOR_0, T_WHILE_0, T_REPEAT_0, T_GOTO_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0 }, { "statement_in_while_and_if_body",{\
+{LA_IS, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_WHILE_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0 }, { "statement_in_while_and_if_body",{\
     {LA_IS, {""}, 1, { "statement" }}\
 }}},\
 {LA_IS, { T_CONTINUE_WHILE_0 }, { "statement_in_while_and_if_body",{\
@@ -416,10 +348,10 @@
 {LA_IS, { T_BEGIN_BLOCK_0 }, { "block_statements_in_while_and_if_body",{\
     {LA_IS, {""}, 3, { T_BEGIN_BLOCK_0, "statement_in_while_and_if_body__iteration", T_END_BLOCK_0 }}\
 }}},\
-{LA_IS, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_FOR_0, T_WHILE_0, T_REPEAT_0, T_GOTO_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0, T_CONTINUE_WHILE_0, T_EXIT_WHILE_0 }, { "statement_in_while_and_if_body__iteration",{\
+{LA_IS, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_WHILE_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0, T_CONTINUE_WHILE_0, T_EXIT_WHILE_0 }, { "statement_in_while_and_if_body__iteration",{\
     {LA_IS, {""}, 2, { "statement_in_while_and_if_body", "statement_in_while_and_if_body__iteration" }}\
 }}},\
-{LA_NOT, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_FOR_0, T_WHILE_0, T_REPEAT_0, T_GOTO_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0, T_CONTINUE_WHILE_0, T_EXIT_WHILE_0 }, { "statement_in_while_and_if_body__iteration",{\
+{LA_NOT, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_WHILE_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0, T_CONTINUE_WHILE_0, T_EXIT_WHILE_0 }, { "statement_in_while_and_if_body__iteration",{\
     {LA_IS, {""}, 0, { "" }}\
 }}},\
 {LA_IS, { "(", T_NOT_0, T_ADD_0, T_SUB_0, "ident_terminal", "unsigned_value_terminal", T_IF_0 }, { "while_cycle_head_expression",{\
@@ -428,13 +360,7 @@
 {LA_IS, { T_WHILE_0 }, { "while_cycle",{\
     {LA_IS, {""}, 3, { T_WHILE_0, "while_cycle_head_expression", "block_statements_in_while_and_if_body" }}\
 }}},\
-{LA_IS, { "(", T_NOT_0, T_ADD_0, T_SUB_0, "ident_terminal", "unsigned_value_terminal", T_IF_0 }, { "repeat_until_cycle_cond",{\
-    {LA_IS, {""}, 1, { "expression" }}\
-}}},\
-{LA_IS, { T_REPEAT_0 }, { "repeat_until_cycle",{\
-    {LA_IS, {""}, 4, { T_REPEAT_0, "statements__or__block_statements", T_UNTIL_0, "repeat_until_cycle_cond" }}\
-}}},\
-{LA_IS, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_FOR_0, T_WHILE_0, T_REPEAT_0, T_GOTO_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0 }, { "statements__or__block_statements",{\
+{LA_IS, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_WHILE_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0 }, { "statements__or__block_statements",{\
     {LA_IS, {""}, 1, { "statement__iteration" }}\
 }}},\
 {LA_IS, { T_BEGIN_BLOCK_0 }, { "statements__or__block_statements",{\
@@ -452,24 +378,11 @@
 {LA_IS, { T_OUTPUT_0 }, { "output_rule", {\
     {LA_IS, { "" }, 2, {T_OUTPUT_0, "expression"} }\
 }}},\
-{LA_IS, { "ident_terminal" }, { "statement", {\
-    { LA_IS, { T_COLON_0 }, 1, {"labeled_point"}},\
-    { LA_NOT, { T_COLON_0 }, 1, {"expression_or_cond_block__with_optional_assign"}}\
-}}},\
-{LA_IS, { "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0 }, { "statement", {\
+{LA_IS, { "(", T_NOT_0, "ident_terminal", "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0 }, { "statement", {\
     { LA_IS, {""}, 1, {"expression_or_cond_block__with_optional_assign"}}\
-}}},\
-{LA_IS, { T_GOTO_0 }, { "statement",{\
-    {LA_IS, {""}, 1, {"goto_label"}}\
-}}},\
-{LA_IS, { T_FOR_0 }, { "statement",{\
-    {LA_IS, {""}, 1, {"forto_cycle"}}\
 }}},\
 {LA_IS, { T_WHILE_0 }, { "statement",{\
     {LA_IS, {""}, 1, {"while_cycle"}}\
-}}},\
-{LA_IS, { T_REPEAT_0 }, { "statement",{\
-    {LA_IS, {""}, 1, {"repeat_until_cycle"}}\
 }}},\
 {LA_IS, { T_INPUT_0 }, { "statement",{\
     {LA_IS, {""}, 1, {"input_rule"}}\
@@ -480,10 +393,10 @@
 {LA_IS, { T_SEMICOLON_0 }, { "statement",{\
     {LA_IS, {""}, 1, {";"}}\
 }}},\
-{ LA_IS, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_FOR_0, T_WHILE_0, T_REPEAT_0, T_GOTO_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0 }, { "statement__iteration",{\
+{ LA_IS, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_WHILE_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0 }, { "statement__iteration",{\
     { LA_IS, {""}, 2, { "statement", "statement__iteration" }}\
 }}},\
-{ LA_NOT, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_FOR_0, T_WHILE_0, T_REPEAT_0, T_GOTO_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0 }, { "statement__iteration",{\
+{ LA_NOT, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_WHILE_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0 }, { "statement__iteration",{\
     { LA_IS, {""}, 0, { "" }}\
 }}},\
 { LA_IS, { T_BEGIN_BLOCK_0 }, { "block_statements",{\
