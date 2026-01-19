@@ -1,0 +1,88 @@
+digraph FSM_TOKENS {
+  // === 1. Налаштування сторінки А4 ===
+  size="7.5,10"; 
+  ratio="compress"; 
+  dpi=72;
+  margin=0; 
+  rankdir=LR;
+  
+  // === 2. Розміщення ЛЕГЕНДИ ЗВЕРХУ ===
+  labelloc="t"; // t = top (розмістити заголовок зверху)
+  labeljust="l"; // l = left (вирівняти по лівому краю)
+  
+  // Ми переносимо HTML-таблицю з вузла у глобальний label
+  label=<
+    <table border="0" cellborder="0" cellspacing="0" cellpadding="0">
+      <tr><td>
+        <table border="0" cellborder="1" cellspacing="0" cellpadding="8" bgcolor="#f5f5f5">
+          <tr><td border="0"><b><font point-size="14">Легенда скорочень</font></b></td></tr>
+          <tr><td border="0">
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4" bgcolor="white">
+              <tr><td bgcolor="#dddddd"><b>Тег</b></td><td bgcolor="#dddddd"><b>Значення</b></td></tr>
+              <tr><td>[0-9]</td><td>Цифри (0x30-0x39)</td></tr>
+              <tr><td>[A-Z]</td><td>Великі літери (ідентифікатори)</td></tr>
+              <tr><td>[Other]</td><td>Всі інші символи (0x00-0xFF)</td></tr>
+            </table>
+          </td></tr>
+        </table>
+      </td></tr>
+      <tr><td height="20"></td></tr> </table>
+  >;
+
+  // === 3. Налаштування шрифтів (глобально) ===
+  fontname="Helvetica"; // Шрифт для самого заголовка/легенди
+  node [fontname="Helvetica", fontsize=10, shape=circle, style=solid];
+  edge [fontname="Helvetica", fontsize=9];
+
+  // === 4. Естетика графа ===
+  splines=true; 
+  overlap=false; 
+  nodesep=0.4; 
+  ranksep=0.6; 
+
+  // === 5. Вузли та Зв'язки ===
+  start [shape=point];
+  
+  // Фінальні
+  node [shape=doublecircle, style=filled, fillcolor="#e8e8e8"];
+  q17; q18;
+
+  // Звичайні
+  node [shape=circle, style=solid, fillcolor="white"];
+
+  start -> q0;
+
+  // --- Ключові слова ---
+  // and
+  q0 -> q12 [label="'a'"]; q12 -> q13 [label="'n'"]; q13 -> q18 [label="'d'"]; 
+  // mul
+  q0 -> q4  [label="'m'"]; q4  -> q5  [label="'u'"]; q5  -> q18 [label="'l'"]; 
+  // not
+  q0 -> q10 [label="'n'"]; q10 -> q11 [label="'o'"]; q11 -> q18 [label="'t'"]; 
+  // or
+  q0 -> q14 [label="'o'"]; q14 -> q18 [label="'r'"];                             
+  // ddd
+  q0 -> q2  [label="'d'"]; q2  -> q3  [label="'d'"]; q3  -> q18 [label="'d'"]; 
+
+  // lt, gt
+  q0 -> q8 [label="'l'"]; q8 -> q18 [label="'t'"]; 
+  q0 -> q9 [label="'g'"]; q9 -> q18 [label="'t'"]; 
+
+  // Оператори
+  q0 -> q1 [label="':'"]; q1 -> q18 [label="'>'"]; 
+  q0 -> q6 [label="'='"]; q6 -> q18 [label="'='"]; 
+  q0 -> q7 [label="'!'"]; q7 -> q18 [label="'='"]; 
+
+  // --- Групи ---
+  // Числа
+  q0  -> q17 [label="[0-9]"];
+  q17 -> q17 [label="[0-9]"]; 
+  q16 -> q18 [label="[0-9]"]; 
+
+  // Ідентифікатори
+  q0  -> q15 [label="[A-Z]"];
+  q15 -> q16 [label="[A-Z]"];
+
+  // --- Catch-All ---
+  q0 -> q18 [label="[Other]", color="#cc0000", fontcolor="#cc0000", style=dashed];
+}

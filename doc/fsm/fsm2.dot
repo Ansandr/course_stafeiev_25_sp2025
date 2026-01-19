@@ -1,0 +1,116 @@
+digraph FSM_KEYWORDS {
+  // === 1. Налаштування A4 та Легенди ЗВЕРХУ ===
+  size="7.5,10"; 
+  ratio="compress"; 
+  dpi=72; 
+  margin=0; 
+  rankdir=LR;
+  
+  labelloc="t"; // Розмістити заголовок зверху
+  labeljust="l"; // Вирівняти по лівому краю
+
+  // HTML-легенда
+  label=<
+    <table border="0" cellborder="0" cellspacing="0" cellpadding="0">
+      <tr><td>
+        <table border="0" cellborder="1" cellspacing="0" cellpadding="8" bgcolor="#f5f5f5">
+          <tr><td border="0"><b><font point-size="14">Lexer FSM: Keywords & Operators</font></b></td></tr>
+          <tr><td border="0">
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4" bgcolor="white">
+              <tr><td bgcolor="#dddddd"><b>Тег</b></td><td bgcolor="#dddddd"><b>Значення</b></td></tr>
+              <tr><td>[Sep]</td><td>Розділювачі: % ( ) , - / ; [ ] { }</td></tr>
+            </table>
+          </td></tr>
+        </table>
+      </td></tr>
+      <tr><td height="30"></td></tr>
+    </table>
+  >;
+
+  // === 2. Стиль ===
+  fontname="Helvetica";
+  node [fontname="Helvetica", fontsize=10, shape=circle];
+  edge [fontname="Helvetica", fontsize=9];
+  splines=true; overlap=false; nodesep=0.3; ranksep=0.5;
+
+  // === 3. Вузли ===
+  start [shape=point];
+  
+  // Фінальний стан (помилка або успіх токена)
+  node [shape=doublecircle, style=filled, fillcolor="#e8e8e8"]; q58;
+  
+  // Звичайні стани
+  node [shape=circle, style=solid, fillcolor="white"];
+
+  // === 4. Зв'язки ===
+  start -> q0;
+
+  // --- Розділювачі ---
+  q0 -> q58 [label="[Sep]"];
+
+  // --- Оператори ---
+  q0 -> q7 [label="'!'"];  q7 -> q58 [label="'='"]; // !=
+  q0 -> q1 [label="':'"];  q1 -> q58 [label="'>'"]; // :=
+  q0 -> q6 [label="'='"];  q6 -> q58 [label="'='"]; // ==
+
+  // --- Ключові слова ---
+
+  // 'a' -> and
+  q0 -> q12 [label="'a'"]; q12 -> q13 [label="'n'"]; q13 -> q58 [label="'d'"];
+
+  // 'b' -> break
+  q0 -> q47 [label="'b'"]; q47 -> q48 [label="'r'"]; q48 -> q49 [label="'e'"]; 
+  q49 -> q50 [label="'a'"]; q50 -> q58 [label="'k'"];
+
+  // 'c' -> continue
+  q0 -> q51 [label="'c'"]; q51 -> q52 [label="'o'"]; q52 -> q53 [label="'n'"];
+  q53 -> q54 [label="'t'"]; q54 -> q55 [label="'i'"]; q55 -> q56 [label="'n'"];
+  q56 -> q57 [label="'u'"]; q57 -> q58 [label="'e'"];
+
+  // 'd' -> ddd
+  q0 -> q2 [label="'d'"]; q2 -> q3 [label="'d'"]; q3 -> q58 [label="'d'"];
+
+  // 'e' -> else / end
+  q0 -> q40 [label="'e'"]; 
+  q40 -> q41 [label="'l'"]; q41 -> q42 [label="'s'"]; q42 -> q58 [label="'e'"]; // else
+  q40 -> q25 [label="'n'"]; q25 -> q26 [label="'d'"]; q26 -> q58 [label=""];    // end (Відновлено!)
+
+  // 'g' -> gt
+  q0 -> q9 [label="'g'"]; q9 -> q58 [label="'t'"];
+
+  // 'i' -> if / int32
+  q0 -> q36 [label="'i'"];
+  q36 -> q58 [label="'f'"]; // if
+  q36 -> q37 [label="'n'"]; q37 -> q38 [label="'t'"]; q38 -> q39 [label="'3'"]; q39 -> q58 [label="'2'"]; // int32
+
+  // 'l' -> lt
+  q0 -> q8 [label="'l'"]; q8 -> q58 [label="'t'"];
+
+  // 'm' -> mul
+  q0 -> q4 [label="'m'"]; q4 -> q5 [label="'u'"]; q5 -> q58 [label="'l'"];
+
+  // 'n' -> not
+  q0 -> q10 [label="'n'"]; q10 -> q11 [label="'o'"]; q11 -> q58 [label="'t'"];
+
+  // 'o' -> or
+  q0 -> q14 [label="'o'"]; q14 -> q58 [label="'r'"];
+
+  // 'p' -> program
+  q0 -> q15 [label="'p'"]; q15 -> q16 [label="'r'"]; q16 -> q17 [label="'o'"]; 
+  q17 -> q18 [label="'g'"]; q18 -> q19 [label="'r'"]; q19 -> q20 [label="'a'"]; q20 -> q58 [label="'m'"];
+
+  // 'r' -> read
+  q0 -> q29 [label="'r'"]; q29 -> q30 [label="'e'"]; q30 -> q31 [label="'a'"]; q31 -> q58 [label="'d'"];
+
+  // 's' -> start
+  q0 -> q21 [label="'s'"]; q21 -> q22 [label="'t'"]; q22 -> q23 [label="'a'"]; 
+  q23 -> q24 [label="'r'"]; q24 -> q58 [label="'t'"];
+
+  // 'v' -> var
+  q0 -> q27 [label="'v'"]; q27 -> q28 [label="'a'"]; q28 -> q58 [label="'r'"];
+
+  // 'w' -> while / write
+  q0 -> q43 [label="'w'"]; 
+  q43 -> q44 [label="'h'"]; q44 -> q45 [label="'i'"]; q45 -> q46 [label="'l'"]; q46 -> q58 [label="'e'"]; // while
+  q43 -> q32 [label="'r'"]; q32 -> q33 [label="'i'"]; q33 -> q34 [label="'t'"]; q34 -> q35 [label="'e'"]; q35 -> q58 [label=""]; // write (Відновлено!)
+}

@@ -1,0 +1,59 @@
+digraph FSM_UNSIGNED_VALUES {
+  // === 1. A4 Layout & Top Legend ===
+  size="7.5,10"; 
+  ratio="compress"; 
+  dpi=72;
+  margin=0; 
+  rankdir=LR;
+
+  labelloc="t"; // Легенда зверху
+  labeljust="l";
+
+  // HTML-легенда
+  label=<
+    <table border="0" cellborder="0" cellspacing="0" cellpadding="0">
+      <tr><td>
+        <table border="0" cellborder="1" cellspacing="0" cellpadding="8" bgcolor="#f5f5f5">
+          <tr><td border="0"><b><font point-size="14">FSM: Unsigned Integers</font></b></td></tr>
+          <tr><td border="0">
+            <table border="0" cellborder="1" cellspacing="0" cellpadding="4" bgcolor="white">
+              <tr><td bgcolor="#dddddd"><b>Тег</b></td><td bgcolor="#dddddd"><b>Значення</b></td></tr>
+              <tr><td>[1-9]</td><td>Цифри без нуля (1-9)</td></tr>
+              <tr><td>[0-9]</td><td>Будь-яка цифра (0-9)</td></tr>
+            </table>
+          </td></tr>
+        </table>
+      </td></tr>
+      <tr><td height="20"></td></tr>
+    </table>
+  >;
+
+  // === 2. Geometry & Type ===
+  splines=true; overlap=false; nodesep=0.6; ranksep=0.8;
+  node [fontname="Helvetica", fontsize=10, shape=circle];
+  edge [fontname="Helvetica", fontsize=9];
+
+  // === 3. Nodes ===
+  start [shape=point];
+  
+  // Фінальні стани
+  node [shape=doublecircle, style=filled, fillcolor="#e8e8e8"]; 
+  q1; q2; q3;
+
+  // Початковий стан
+  node [shape=circle, style=solid, fillcolor="white"];
+  q0;
+
+  // === 4. Edges ===
+  start -> q0;
+
+  // Окремий випадок для нуля
+  q0 -> q3 [label="'0'"];
+
+  // Числа, що починаються не з нуля
+  q0 -> q1 [label="[1-9]"];
+  
+  // Наступні цифри
+  q1 -> q2 [label="[0-9]"];
+  q2 -> q2 [label="[0-9]"];
+}
