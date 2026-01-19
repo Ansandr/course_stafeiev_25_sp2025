@@ -1,0 +1,47 @@
+@startuml
+skinparam monochrome true
+skinparam backgroundColor white
+skinparam defaultFontColor black
+skinparam ConditionEndStyle hline
+skinparam ArrowColor black
+
+start
+
+:Виклик checkingInternalCollisionInDeclarations()|
+note right
+  Перевірка колізій
+  у оголошеннях
+end note
+
+if (Є помилки?) then (Так)
+  :Повернути код помилки;
+  stop
+endif
+
+:Виклик checkingVariableInitialization()|
+note right
+  Перевірка ініціалізації
+  змінних
+end note
+
+if (Є помилки?) then (Так)
+  :Повернути код помилки;
+  stop
+endif
+
+:Виклик checkingCollisionInDeclarationsByKeyWords()|
+note right
+  Перевірка конфліктів
+  з ключовими словами
+end note
+
+if (Є помилки?) then (Так)
+  :Повернути код помилки;
+  stop
+endif
+
+:Повернути SUCCESS_STATE;
+
+stop
+
+@enduml

@@ -1,0 +1,72 @@
+@startuml
+skinparam monochrome true
+skinparam backgroundColor white
+skinparam defaultFontColor black
+skinparam ConditionEndStyle hline
+skinparam ArrowColor black
+
+start
+
+:Вхід: NFA без ε-переходів;
+
+:Ініціалізувати таблицю переходів DFA;
+note right
+  table[symbol][state] = ND
+  (недетермінований/відсутній перехід)
+end note
+
+:Створити чергу неопрацьованих станів DFA;
+:Початковий стан DFA = {q₀};
+:Додати початковий стан до черги;
+
+while (Черга не порожня?) is (Так)
+  :Взяти підмножину станів NFA\nз черги (поточний стан DFA);
+  
+  while (Для кожного символу a алфавіту) is (Є символи)
+    :Створити порожню множину new_subset;
+    
+    while (Для кожного стану nfa_state\nу поточній підмножині) is (Є стани)
+      :Знайти всі переходи з nfa_state\nпо символу a;
+      
+      while (Для кожного переходу) is (Є переходи)
+        :Отримати стан to_state;
+        
+        if (to_state вже у new_subset?) then (Ні)
+          :Додати to_state до new_subset;
+        endif
+      endwhile (Ні)
+    endwhile (Ні)
+    
+    if (new_subset не порожня?) then (Так)
+      if (new_subset вже існує як стан DFA?) then (Так)
+        :Знайти existing_state;
+        :table[symbol][current_dfa_state] = existing_state;
+      else (Ні)
+        :Створити новий стан DFA = new_subset;
+        :Додати до черги;
+        :table[symbol][current_dfa_state] = новий_стан;
+      endif
+    endif
+  endwhile (Ні)
+endwhile (Ні)
+
+:Визначити заключні стани DFA;
+note right
+  Стан DFA є заключним, якщо
+  відповідна підмножина містить
+  хоча б один заключний стан NFA
+end note
+
+while (Для кожного стану DFA) is (Є стани)
+  :Отримати відповідну підмножину станів NFA;
+  
+  if (Підмножина містить заключний стан NFA?) then (Так)
+    :Відмітити стан DFA як заключний;
+  endif
+endwhile (Ні)
+
+:Повернути DFA;
+
+stop
+
+@enduml

@@ -1,0 +1,55 @@
+@startuml
+skinparam monochrome true
+skinparam backgroundColor white
+skinparam defaultFontColor black
+skinparam ConditionEndStyle hline
+skinparam ArrowColor black
+
+start
+
+:Вхідний файл програми (.k03)/
+
+:Лексичний аналіз|
+note right
+  Розбиття на лексеми,
+  побудова таблиці лексем
+end note
+
+if (Є лексичні помилки?) then (Так)
+  :Вивести повідомлення про помилки;
+  stop
+endif
+
+:Синтаксичний аналіз|
+note right
+  Побудова абстрактного
+  синтаксичного дерева (AST)
+end note
+
+if (Є синтаксичні помилки?) then (Так)
+  :Вивести повідомлення про помилки;
+  stop
+endif
+
+:Семантичний аналіз|
+note right
+  Перевірка коректності програми:
+  оголошення, ініціалізація, конфлікти
+end note
+
+if (Є семантичні помилки?) then (Так)
+  :Вивести повідомлення про помилки;
+  stop
+endif
+
+:Генерація коду|
+note right
+  Перетворення AST у машинний код
+  через проміжний RPN
+end note
+
+:Вихідний файл програми (.asm)/
+
+stop
+
+@enduml

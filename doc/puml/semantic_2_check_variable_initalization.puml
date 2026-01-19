@@ -1,0 +1,58 @@
+@startuml
+skinparam monochrome true
+skinparam backgroundColor white
+skinparam defaultFontColor black
+skinparam ConditionEndStyle hline
+skinparam ArrowColor black
+
+start
+
+if (Визначено DISABLE_CHECKING_VARIABLE_INITIALIZATION?) then (Так)
+  :Повернути SUCCESS_STATE;
+  stop
+endif
+
+:Виклик getPostDataSectionLexemIndex()|
+note right
+  Знаходження початку
+  виконуваного коду
+end note
+
+:Ініціалізація масиву станів ініціалізації змінних;
+note right
+  Всі змінні спочатку
+  неініціалізовані
+end note
+
+while (Сканування коду програми) is (Є лексеми)
+  if (Ідентифікатор?) then (Так)
+    
+    if (Оголошення мітки\n(identifier + :)?) then (Так)
+      :Ігнорувати (це мітка);
+    elseif (Використання у goto\n(goto + identifier)?) then (Так)
+      :Ігнорувати (це мітка);
+    elseif (Присвоєння зліва направо\n(вираз + :> + identifier)?) then (Так)
+      :Встановити прапорець ініціалізації;
+    elseif (Присвоєння справа наліво\n(identifier + <: + вираз)?) then (Так)
+      :Встановити прапорець ініціалізації;
+    elseif (Операція введення\n(read + identifier)?) then (Так)
+      :Встановити прапорець ініціалізації;
+    elseif (Присвоєння елементу масиву\n(вираз + :> + identifier + [ ])?) then (Так)
+      :Встановити прапорець ініціалізації;
+    else (Використання у виразі)
+      if (Змінна ініціалізована?) then (Ні)
+        :Згенерувати UNINITIALIZED_I_STATE;
+        :Вказати ім'я змінної та позицію;
+        stop
+      endif
+    endif
+  endif
+  
+  :Перейти до наступної лексеми;
+endwhile (Кінець коду)
+
+:Повернути SUCCESS_STATE;
+
+stop
+
+@enduml

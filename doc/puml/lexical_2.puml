@@ -1,0 +1,67 @@
+@startuml
+skinparam monochrome true
+skinparam backgroundColor white
+skinparam defaultFontColor black
+skinparam ConditionEndStyle hline
+skinparam ArrowColor black
+
+start
+
+:Вхід: NFA з ε-переходами;
+
+:Обчислити ε-замикання\nдля кожного стану|
+note right
+  ε-closure(q) - множина всіх станів,
+  досяжних з q шляхом ε-переходів
+end note
+
+while (Для кожного стану q) is (Є стани)
+  :Створити порожню множину closure;
+  :Додати q до closure;
+  
+  :Виклик compute_epsilon_closure(q, closure)|
+  note right
+    Рекурсивне обчислення
+    ε-замикання
+  end note
+  
+  while (Для кожного символу a алфавіту) is (Є символи)
+    :Обчислити δ(ε-closure(q), a);
+    note right
+      Множина станів, досяжних
+      з ε-closure(q) по символу a
+    end note
+    
+    :Обчислити ε-closure(δ(ε-closure(q), a));
+    note right
+      Це буде δ'(q, a)
+      для нового автомата M'
+    end note
+    
+    :Додати перехід (q, a, δ'(q, a))\nдо нового автомата;
+  endwhile (Ні)
+  
+endwhile (Ні)
+
+:Визначити заключні стани F';
+note right
+  F' = {q ∈ Q' | q ∈ F або ∃f ∈ F: q ⇒ε f}
+end note
+
+while (Для кожного стану q) is (Є стани)
+  if (q є заключним в M\nАБО з q є ε-шлях до заключного стану?) then (Так)
+    :Додати q до F';
+  endif
+endwhile (Ні)
+
+:Видалити недосяжні стани;
+note right
+  Стани, в які заходять
+  тільки ε-дуги
+end note
+
+:Повернути автомат M' без ε-переходів;
+
+stop
+
+@enduml

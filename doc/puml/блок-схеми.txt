@@ -1,0 +1,14 @@
+Синтаксичний аналізатор:
+ - syntax_general.txt - Загальна блок-схема
+
+Семантичний аналізатор:
+ - semantic_0_general.txt - Загальна блок-схема
+ - semantic_1_check_colision_in_declaration.txt - Перевірка колізій у декларації
+ - semantic_2_check_variable_initalization.txt - Перевірка ініціалізації змінних
+ - semantic_3_check_colision_in_declaration_keyword.txt - Перевірка колізій з ключовими словами
+
+Генератор коду:
+ - generator_0_general.txt - Загальна блок-схема
+ - generator_1_1_associative.txt - Асоціативні операції
+ - generator_1_RPN.txt - Зворотна польська нотація
+ - generator_2_generator.txt - Генератор

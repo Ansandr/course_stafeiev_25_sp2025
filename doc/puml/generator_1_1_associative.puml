@@ -1,0 +1,46 @@
+@startuml
+skinparam monochrome true
+skinparam backgroundColor white
+skinparam defaultFontColor black
+skinparam ConditionEndStyle hline
+skinparam ArrowColor black
+
+start
+
+:Вхід: оператор;
+
+if (Оператор є унарним?) then (Так)
+  :Повернути ПРАВОАСОЦІАТИВНИЙ;
+  stop
+endif
+
+if (Оператор є присвоєнням?) then (Так)
+  :Повернути ПРАВОАСОЦІАТИВНИЙ;
+  stop
+endif
+
+if (Оператор є read/write?) then (Так)
+  :Повернути ПРАВОАСОЦІАТИВНИЙ;
+  stop
+endif
+
+if (Оператор є арифметичним?) then (Так)
+  :Повернути ЛІВОАСОЦІАТИВНИЙ;
+  stop
+endif
+
+if (Оператор є логічним?) then (Так)
+  :Повернути ЛІВОАСОЦІАТИВНИЙ;
+  stop
+endif
+
+if (Оператор є порівнянням?) then (Так)
+  :Повернути ЛІВОАСОЦІАТИВНИЙ;
+  stop
+endif
+
+:Повернути ЛІВОАСОЦІАТИВНИЙ (за замовчуванням);
+
+stop
+
+@enduml

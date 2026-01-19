@@ -1,0 +1,35 @@
+@startuml
+skinparam monochrome true
+skinparam backgroundColor white
+skinparam defaultFontColor black
+skinparam ConditionEndStyle hline
+skinparam ArrowColor black
+
+start
+
+:Етап 1: Генератор DFA|
+note right
+  Перетворення регулярних виразів
+  у детермінований скінченний автомат
+end note
+
+:Перетворити регулярні вирази у NFA;
+:Видалити λ-переходи;
+:Перетворити NFA у DFA;
+:Мінімізувати DFA;
+
+:Етап 2: Лексичний аналіз|
+note right
+  Обробка вхідного коду
+  за допомогою DFA
+end note
+
+:Сканувати вхідний код;
+:Розпізнати лексеми за допомогою DFA;
+:Побудувати таблицю лексем;
+
+:Зберегти результати у файли;
+
+stop
+
+@enduml

@@ -1,0 +1,61 @@
+@startuml
+skinparam monochrome true
+skinparam backgroundColor white
+skinparam defaultFontColor black
+skinparam ConditionEndStyle hline
+skinparam ArrowColor black
+
+start
+
+:Ініціалізація стека символів;
+:Помістити program_rule у стек;
+:Створити кореневий вузол AST;
+:Встановити вказівники currTapeElement та nextTapeElement;
+
+while (Стек не порожній?) is (Так)
+  if (Символ на вершині стека збігається\nз поточним токеном?) then (Так)
+    :Зняти символ зі стека;
+    :Відмітити вузол AST як термінал;
+    :Просунути вказівники на наступний токен;
+  else (Ні)
+    if (На вершині стека нетермінал?) then (Так)
+      :Виклик getActualRHSConteinerRHS()|
+      note right
+        Вибір правила виведення
+        з аналізом LL(2)
+      end note
+      
+      if (Правило знайдено?) then (Так)
+        :Зняти нетермінал зі стека;
+        :Додати символи правої частини\nправила у стек у зворотному порядку;
+        :Створити вузли AST для символів;
+        :Встановити зв'язки між вузлами;
+      else (Ні)
+        :Зафіксувати синтаксичну помилку;
+        :Записати позицію та несподіваний токен;
+        stop
+      endif
+    else (Ні)
+      :Зафіксувати помилку невідповідності;
+      stop
+    endif
+  endif
+endwhile (Ні)
+
+:Виклик ASTNode::redirectLinks()|
+note right
+  Встановлення правильної
+  ієрархії вузлів дерева
+end note
+
+if (Залишились необроблені токени?) then (Так)
+  :Згенерувати помилку про\nнесподіваний символ;
+  stop
+else (Ні)
+  :Зберегти AST у файл;
+  :Повернути SUCCESS_STATE;
+endif
+
+stop
+
+@enduml

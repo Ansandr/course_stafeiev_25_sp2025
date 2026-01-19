@@ -1,0 +1,91 @@
+@startuml
+skinparam monochrome true
+skinparam backgroundColor white
+skinparam defaultFontColor black
+skinparam ConditionEndStyle hline
+skinparam ArrowColor black
+
+start
+
+:Виклик getPostDataSectionLexemIndex()|
+note right
+  Знаходження межі секції
+  оголошень змінних
+end note
+
+:Ініціалізація лічильника ідентифікаторів = 0;
+
+while (Є ідентифікатори у таблиці?) is (Так)
+  :Ініціалізувати прапорці стану для поточного ідентифікатора;
+  note right
+    isDeclaredIdentifier = false
+    isDeclaredIdentifierCollision = false
+    isLabel = false
+    isDeclaredLabel = false
+    isDeclaredLabelCollision = false
+  end note
+  
+  :Сканувати секцію оголошень змінних;
+  
+  while (Є входження ідентифікатора\nу секції даних?) is (Так)
+    if (Перше входження?) then (Так)
+      :Встановити isDeclaredIdentifier = true;
+    else (Ні)
+      :Встановити isDeclaredIdentifierCollision = true;
+    endif
+  endwhile (Ні)
+  
+  :Сканувати код програми після секції даних;
+  
+  while (Є конструкції з міткою?) is (Так)
+    if (Оголошення мітки (identifier + :)?) then (Так)
+      if (Перше оголошення?) then (Так)
+        :Встановити isDeclaredLabel = true;
+      else (Ні)
+        :Встановити isDeclaredLabelCollision = true;
+      endif
+    endif
+    
+    if (Використання мітки (goto + identifier)?) then (Так)
+      :Встановити isLabel = true;
+    endif
+  endwhile (Ні)
+  
+  if (isDeclaredIdentifierCollision?) then (Так)
+    :Згенерувати COLLISION_II_STATE;
+    :Повторне оголошення змінної;
+    stop
+  endif
+  
+  if (isDeclaredLabelCollision?) then (Так)
+    :Згенерувати COLLISION_LL_STATE;
+    :Повторне оголошення мітки;
+    stop
+  endif
+  
+  if (isDeclaredIdentifier AND isLabel?) then (Так)
+    :Згенерувати COLLISION_IL_STATE;
+    :Конфлікт змінної та мітки;
+    stop
+  endif
+  
+  if (!isDeclaredIdentifier AND використовується?) then (Так)
+    :Згенерувати COLLISION_I_STATE;
+    :Неоголошена змінна;
+    stop
+  endif
+  
+  if (!isDeclaredLabel AND isLabel?) then (Так)
+    :Згенерувати COLLISION_L_STATE;
+    :Неоголошена мітка;
+    stop
+  endif
+  
+  :Перейти до наступного ідентифікатора;
+endwhile (Ні)
+
+:Повернути SUCCESS_STATE;
+
+stop
+
+@enduml

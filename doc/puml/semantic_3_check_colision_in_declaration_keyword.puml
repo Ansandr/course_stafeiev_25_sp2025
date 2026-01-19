@@ -1,0 +1,42 @@
+@startuml
+skinparam monochrome true
+skinparam backgroundColor white
+skinparam defaultFontColor black
+skinparam ConditionEndStyle hline
+skinparam ArrowColor black
+
+start
+
+:Підготовка регулярного виразу KEYWORDS_RE;
+note right
+  Перелік всіх ключових слів мови:
+  var, int, write, read, goto,
+  while, endwhile, if, then, else, endif
+end note
+
+:Ініціалізація лічильника ідентифікаторів = 0;
+
+while (Є ідентифікатори у таблиці?) is (Так)
+  :Отримати поточний ідентифікатор;
+  
+  :Виклик std::regex_match()|
+  note right
+    Порівняння імені ідентифікатора
+    з регулярним виразом KEYWORDS_RE
+  end note
+  
+  if (Ім'я збігається з ключовим словом?) then (Так)
+    :Згенерувати COLLISION_IK_STATE;
+    :Сформувати повідомлення про конфлікт;
+    :Вказати назву проблемного ідентифікатора;
+    stop
+  endif
+  
+  :Перейти до наступного ідентифікатора;
+endwhile (Ні)
+
+:Повернути SUCCESS_STATE;
+
+stop
+
+@enduml

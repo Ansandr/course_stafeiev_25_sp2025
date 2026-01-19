@@ -1,0 +1,31 @@
+@startuml
+skinparam monochrome true
+skinparam backgroundColor white
+skinparam defaultFontColor black
+skinparam ConditionEndStyle hline
+skinparam ArrowColor black
+
+start
+
+:Етап 1: Підготовка (Препарер)|
+note right
+  Перетворення послідовності лексем
+  у зворотний польський запис (RPN)
+end note
+
+:Перетворити інфіксний запис у RPN;
+
+:Етап 2: Власне генерація коду|
+note right
+  Обробка RPN-послідовності
+  та генерація коду
+end note
+
+:Обробити RPN-послідовність;
+:Згенерувати машинний код;
+
+:Зберегти результат у файл .asm;
+
+stop
+
+@enduml

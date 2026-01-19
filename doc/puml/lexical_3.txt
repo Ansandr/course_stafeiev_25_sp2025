@@ -1,0 +1,124 @@
+Процес перетворення NFA у детермінований скінченний автомат (DFA) після видалення λ-переходів
+Перетворення NFA в DFA виконується за алгоритмом побудови підмножин (subset construction, алгоритм Томпсона-Макнафтона-Ямамото). Основна ідея полягає в тому, що кожен стан DFA відповідає підмножині станів NFA.
+Принцип детермінізації
+Скінченний автомат M = (Q, Σ, δ, I, F) називається детермінованим, якщо:
+1. Множина I містить рівно один елемент (один початковий стан)
+2. Для кожного переходу (p, x, q) ∈ δ виконується рівність |x| = 1 (мітки переходів є однобуквеними)
+3. Автомат не містить дуг з порожніми ε-мітками
+4. Для кожного символу a ∈ Σ і для довільного стану p ∈ Q існує тільки один стан q ∈ Q такий, що (p, a, q) ∈ δ
+Алгоритм детермінізації
+1. Ініціалізація
+•	Початковий стан DFA відповідає множині початкових станів NFA: `{q₀}`
+•	Створюється черга неопрацьованих станів DFA
+2. Побудова станів DFA
+Для кожного неопрацьованого стану DFA (який є підмножиною станів NFA):
+•	Для кожного символу `a` алфавіту:
+•	Обчислюється множина станів NFA, досяжних з поточної підмножини по символу `a`
+•	Ця множина стає новим станом DFA (якщо його ще немає)
+•	Додається перехід в таблицю переходів DFA
+3. Визначення заключних станів
+•	Стан DFA є заключним, якщо відповідна йому підмножина станів NFA містить хоча б один заключний стан NFA.
+Реалізація в коді
+TODO блоксхема
+
+void generate_transition_table(int start_state, int* finit_states, int finit_states_count,
+                 int table[SYMBOL_NUMBER][MAX_STATES], int* state_count) {
+  // Ініціалізація таблиці переходів
+  for (int symbol = 0; symbol < SYMBOL_NUMBER; symbol++) {
+    for (int state = 0; state < MAX_STATES; state++) {
+      table[symbol][state] = ND; // ND = недетермінований (відсутній перехід)
+    }
+  }
+  
+  // Черга для обробки станів (побудова підмножин)
+  int queue[MAX_STATES][MAX_STATES]; // queue[i] - підмножина станів NFA
+  int queue_sizes[MAX_STATES];
+  int queue_start = 0, queue_end = 0;
+  
+  // Початковий стан DFA
+  queue[queue_end][0] = start_state;
+  queue_sizes[queue_end] = 1;
+  queue_end++;
+  (*state_count) = 1;
+  
+  // Побудова підмножин
+  while (queue_start < queue_end) {
+    int current_subset_size = queue_sizes[queue_start];
+    int* current_subset = queue[queue_start];
+    int current_dfa_state = queue_start;
+    
+    // Для кожного символу алфавіту
+    for (int symbol = 0; symbol < SYMBOL_NUMBER; symbol++) {
+      int new_subset[MAX_STATES];
+      int new_subset_size = 0;
+      
+      // Обчислення переходів для всіх станів у підмножині
+      for (int i = 0; i < current_subset_size; i++) {
+        int nfa_state = current_subset[i];
+        
+        // Знаходження всіх переходів по символу symbol
+        for (int j = 0; j < transition_count; j++) {
+          if (transitions[j].from == nfa_state && 
+            transitions[j].symbolCode == symbol) {
+            int to_state = transitions[j].to;
+            
+            // Додавання стану до нової підмножини (якщо його там немає)
+            int already_in = 0;
+            for (int k = 0; k < new_subset_size; k++) {
+              if (new_subset[k] == to_state) {
+                already_in = 1;
+                break;
+              }
+            }
+            if (!already_in) {
+              new_subset[new_subset_size++] = to_state;
+            }
+          }
+        }
+      }
+      
+      if (new_subset_size > 0) {
+        // Перевірка, чи вже існує такий стан DFA
+        int existing_state = -1;
+        for (int i = 0; i < queue_end; i++) {
+          if (queue_sizes[i] == new_subset_size) {
+            int match = 1;
+            for (int j = 0; j < new_subset_size; j++) {
+              int found = 0;
+              for (int k = 0; k < new_subset_size; k++) {
+                if (queue[i][k] == new_subset[j]) {
+                  found = 1;
+                  break;
+                }
+              }
+              if (!found) {
+                match = 0;
+                break;
+              }
+            }
+            if (match) {
+              existing_state = i;
+              break;
+            }
+          }
+        }
+        
+        if (existing_state == -1) {
+          // Новий стан DFA
+          for (int i = 0; i < new_subset_size; i++) {
+            queue[queue_end][i] = new_subset[i];
+          }
+          queue_sizes[queue_end] = new_subset_size;
+          table[symbol][current_dfa_state] = queue_end;
+          queue_end++;
+          (*state_count)++;
+        } else {
+          // Перехід до існуючого стану
+          table[symbol][current_dfa_state] = existing_state;
+        }
+      }
+    }
+    
+    queue_start++;
+  }
+}
