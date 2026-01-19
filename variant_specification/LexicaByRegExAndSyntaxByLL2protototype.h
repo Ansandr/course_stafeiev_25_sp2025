@@ -8,9 +8,9 @@
 
 
 #define COMMENT_BEGIN_STR "/*"
-#define COMMENT_END_STR   "*/"
-#define TOKENS_RE         ";|:>|add|-|mul|/|%|==|!=|lt|gt|not|and|or|\\[|\\]|\\(|\\)|\\{|\\}|,|[_A-Za-z0-9]+|[^ \t\r\f\v\n]"
-#define KEYWORDS_RE       ";|:>|add|-|mul|/|%|==|!=|lt|gt|not|and|or|\\[|\\]|\\(|\\)|\\{|\\}|,|program|start|end|var|read|write|if|else|while|break|continue|int32"
+#define COMMENT_END_STR   "\n"
+#define TOKENS_RE         ";|:>|add|-|mul|/|%|==|!=|lt|gt|not|and|or|&|\\[|\\]|\\(|\\)|\\{|\\}|,|[_A-Za-z0-9]+|[^ \t\r\f\v\n]"
+#define KEYWORDS_RE       ";|:>|add|-|mul|/|%|==|!=|lt|gt|not|and|or|&|\\[|\\]|\\(|\\)|\\{|\\}|,|program|start|end|var|read|write|if|else|while|break|continue|int32"
 #define IDENTIFIERS_RE    "[A-Z][A-Z][0-9]"
 #define UNSIGNEDVALUES_RE "0|[1-9][0-9]*"
 #define T_BEGIN_GROUPEXPRESSION_0 "("

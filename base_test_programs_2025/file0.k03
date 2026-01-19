@@ -1,9 +1,9 @@
-program AB0;
+rogram AB0;
 start var int32 AC1, AD2, AE3, AF4;
   read AC1;
   read AD2;
   read AE3;
-
+/* fdfdывы */
   (AC1 - AD2) mul 10 add (AC1 add AD2) / 10 add AE3 :> AF4;
 
   write AF4;

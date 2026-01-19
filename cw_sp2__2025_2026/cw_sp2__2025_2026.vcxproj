@@ -189,6 +189,7 @@
     <None Include="..\base_test_programs_2025\file1.k03" />
     <None Include="..\base_test_programs_2025\file2.k03" />
     <None Include="..\base_test_programs_2025\file3.k03" />
+    <None Include="..\base_test_programs_2025\task133.k03" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\include\cli\cli.h" />

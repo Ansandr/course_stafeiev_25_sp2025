@@ -390,8 +390,8 @@ void removing_unreachable_DFA_states(int* dead_state, int* nextFreeState) {
 }
 #endif
 
-#define TOKENS_RE         ";|:>|add|-|mul|/|%|==|!=|lt|gt|not|and|or|\\[|\\]|\\(|\\)|\\{|\\}|,|[_A-Za-z0-9]+|[^ \t\r\f\v\n]"
-#define KEYWORDS_RE       ";|:>|add|-|mul|/|%|==|!=|lt|gt|not|and|or|\\[|\\]|\\(|\\)|\\{|\\}|,|program|start|end|var|read|write|if|else|while|break|continue|int32"
+#define TOKENS_RE         ";|:>|add|-|mul|/|%|==|!=|lt|gt|not|and|or|&|\\[|\\]|\\(|\\)|\\{|\\}|,|[_A-Za-z0-9]+|[^ \t\r\f\v\n]"
+#define KEYWORDS_RE       ";|:>|add|-|mul|/|%|==|!=|lt|gt|not|and|or|&|\\[|\\]|\\(|\\)|\\{|\\}|,|program|start|end|var|read|write|if|else|while|break|continue|int32"
 #define IDENTIFIERS_RE    "[A-Z][A-Z][0-9]"
 #define UNSIGNEDVALUES_RE "0|[1-9][0-9]*"
 
@@ -412,6 +412,7 @@ void removing_unreachable_DFA_states(int* dead_state, int* nextFreeState) {
                           "|not"\
                           "|and"\
                           "|or"\
+                          "|&"\
                           "|["\
                           "|]"\
                           "|(("\
@@ -532,6 +533,7 @@ void removing_unreachable_DFA_states(int* dead_state, int* nextFreeState) {
                           "|not"\
                           "|and"\
                           "|or"\
+                          "|&"\
                           "|["\
                           "|]"\
                           "|(("\
